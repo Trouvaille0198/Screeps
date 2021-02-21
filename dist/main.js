@@ -1,14 +1,16 @@
-var roleHarverster = require('role.harvester');
+var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
 // var cons = require('constants');
 
-var minNumOfHarvesters = 5;
-var numOfHarvesters = _.sum(Game.screeps, (c) => c.memory.role == 'harvester');
-var minNumOfUpgraders = 5;
-var numOfUpgraders = _.sum(Game.screeps, (c) => c.memory.role == 'upgrader');
+
+
 
 
 module.exports.loop = function () {
+    var minNumOfHarvesters = 10;
+    var minNumOfUpgraders = 10;
+    var numOfHarvesters = _.sum(Game.creeps, (c) => c.memory.role == 'harvester');
+    var numOfUpgraders = _.sum(Game.creeps, (c) => c.memory.role == 'upgrader');
     //Clear memories
     for (let name in Memory.creeps)
     {
@@ -16,11 +18,11 @@ module.exports.loop = function () {
             delete Memory.creeps[name];
         }
     }
-    
+     
     for (let name in Game.creeps) {
         var creep = Game.creeps[name];
         if (creep.memory.role == 'harvester') {
-            roleHarverster.run(creep);
+            roleHarvester.run(creep);
         }
         else if (creep.memory.role == 'upgrader'){
             roleUpgrader.run(creep);
@@ -28,15 +30,15 @@ module.exports.loop = function () {
     }
 
     if (numOfHarvesters < minNumOfHarvesters) {
-        Game.spawns['Spawn1'].spawnCreep([WORK, CARRY, MOVE],
-            'harvester'+Game.time,
-            { memory: { role: 'harvester' } });
+        Game.spawns['Spawn1'].spawnCreep([WORK, CARRY, MOVE,MOVE],
+            'harvester' + Game.time,
+            { memory: { role: 'harvester',working:false } });
         //console.log('A harevster has been spawned.');
     }
-    if (numOfUpgraders < minNumOfUpgraders) {
-        Game.spawns['Spawn1'].spawnCreep([WORK, CARRY, MOVE],
-            'upgrader'+Game.time,
-            { memory: { role: 'upgrader' } });
+    else if (numOfUpgraders < minNumOfUpgraders) {
+        Game.spawns['Spawn1'].spawnCreep([WORK, CARRY, MOVE,MOVE],
+            'upgrader' + Game.time,
+            { memory: { role: 'upgrader',working:false } });
         //console.log('An upgrader has been spawned.');
     }
     console.log(numOfHarvesters, numOfUpgraders);
