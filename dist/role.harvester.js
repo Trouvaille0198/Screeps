@@ -7,9 +7,9 @@ var roleHarvester = {
                 creep.moveTo(source);
             }
         }
-        else if (creep.store[RESOURCE_ENERGY] == creep.store.getCapacity()) {
+        else if (creep.store.getUsedCapacity()!=0) {
             //bring energy to the spawn
-            if (creep.transfer(Game.spawns['Spawn1'], RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
+            if (creep.transfer(Game.spawns['Spawn1'], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(Game.spawns['Spawn1']);
             }
         }
