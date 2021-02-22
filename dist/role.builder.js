@@ -17,22 +17,22 @@ var roleBuilder = {
             if (creep.harvest(source) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(source);
             }
-            else {
-                // complete a constructionSite
-                var constructionSite = creep.pos.findClosestByPath(FIND_CONSTRUCTION_SITES);
-                if (constructionSite != undefined) {
-                    // if there are some construction sites to build
-                    if (creep.build(constructionSite) == ERR_NOT_IN_RANGE) {
-                        creep.moveTo(constructionSite);
-                    }
-                }
-                else {
-                    // if no constructions needed to be built, go upgrading the controller
-                    roleUpgrader.run(creep);
+            
+        }
+        else {
+            // complete a constructionSite
+            var constructionSite = creep.pos.findClosestByPath(FIND_CONSTRUCTION_SITES);
+            if (constructionSite != undefined) {
+                // if there are some construction sites to build
+                if (creep.build(constructionSite) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(constructionSite);
                 }
             }
+            else {
+                // if no constructions needed to be built, go upgrading the controller
+                roleUpgrader.run(creep);
+            }
         }
-    
     }
 }
 
