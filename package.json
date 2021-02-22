@@ -4,5 +4,9 @@
     "grunt-contrib-watch": "^1.1.0",
     "grunt-screeps": "^1.5.0",
     "prettier": "1.19.1"
+  },
+  "dependencies": {
+    "@types/lodash": "^3.10.1",
+    "@types/screeps": "^3.2.1"
   }
 }

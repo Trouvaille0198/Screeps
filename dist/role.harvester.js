@@ -1,4 +1,5 @@
 var roleUpgrader = require("./role.upgrader");
+var roleBuilder = require("./role.builder");
 
 var roleHarvester = {
     run: function (creep) {
@@ -31,7 +32,7 @@ var roleHarvester = {
             }
             else {
                 // if spawn is filled, go upgrade the controller
-                roleUpgrader.run(creep);
+                roleBuilder.run(creep);
             }
         }
     }

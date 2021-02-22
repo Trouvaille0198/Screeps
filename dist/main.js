@@ -1,3 +1,4 @@
+require('prototype.spawn')();
 var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
@@ -5,14 +6,19 @@ var roleRepairer = require('role.repairer');
 
 
 module.exports.loop = function () {
-    var minNumOfHarvesters = 10;
-    var minNumOfUpgraders = 5;
+    var energy = Game.spawns['Spawn1'].room.energyAvailable / 2;
+    console.log(energy * 2 + ' energy left');
+    // energy = 300;
+    //number of creeps in different jobs
+    var minNumOfHarvesters = 8;
+    var minNumOfUpgraders = 3;
+    var minNumOfRepairers = 3;
     var minNumOfBuilders = 5;
-    var minNumOfRepairers = 5;
     var numOfHarvesters = _.sum(Game.creeps, (creep) => creep.memory.role == 'harvester');
     var numOfUpgraders = _.sum(Game.creeps, (creep) => creep.memory.role == 'upgrader');
-    var numOfBuilders = _.sum(Game.creeps, (creep) => creep.memory.role == 'builder');
     var numOfRepairers = _.sum(Game.creeps, (creep) => creep.memory.role == 'repairer');
+    var numOfBuilders = _.sum(Game.creeps, (creep) => creep.memory.role == 'builder');
+
     //Clear memories
     for (let name in Memory.creeps) {
         if (Game.creeps[name] == undefined) {
@@ -37,30 +43,23 @@ module.exports.loop = function () {
     }
 
     if (numOfHarvesters < minNumOfHarvesters) {
-        Game.spawns['Spawn1'].spawnCreep([WORK, CARRY, MOVE, MOVE],
-            'harvester' + Game.time,
-            { memory: { role: 'harvester', working: false } });
+        Game.spawns['Spawn1'].spawnCustomCreep(energy, 'harvester');
+        // Game.spawns['Spawn1'].spawnCreep([WORK, CARRY, MOVE, MOVE],
+        //     'harvester' + Game.time,
+        //     { memory: { role: 'harvester', working: false } });
         //console.log('A harevster has been spawned.');
     }
     else if (numOfUpgraders < minNumOfUpgraders) {
-        Game.spawns['Spawn1'].spawnCreep([WORK, CARRY, MOVE, MOVE],
-            'upgrader' + Game.time,
-            { memory: { role: 'upgrader', working: false } });
-        //console.log('An upgrader has been spawned.');
+        Game.spawns['Spawn1'].spawnCustomCreep(energy, 'upgrader');
     }
     else if (numOfRepairers < minNumOfRepairers) {
-        Game.spawns['Spawn1'].spawnCreep([WORK, CARRY, CARRY, MOVE],
-            'repairer' + Game.time,
-            { memory: { role: 'repairer', working: false } });
-        //console.log('An repairer has been spawned.');
+        Game.spawns['Spawn1'].spawnCustomCreep(energy, 'repairer');
     }
     else if (numOfBuilders < minNumOfBuilders) {
-        Game.spawns['Spawn1'].spawnCreep([WORK, CARRY, CARRY, MOVE],
-            'builder' + Game.time,
-            { memory: { role: 'builder', working: false } });
-        //console.log('An builder has been spawned.');
+        Game.spawns['Spawn1'].spawnCustomCreep(energy, 'builder');
     }
 
 
-    console.log(numOfHarvesters, numOfUpgraders, numOfBuilders, numOfRepairers);
+    console.log('Har: ' + numOfHarvesters, 'Upgr: ' + numOfUpgraders,
+        'Repair: ' + numOfRepairers, 'Build: ' + numOfBuilders);
 } 
