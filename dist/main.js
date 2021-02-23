@@ -7,11 +7,11 @@ var roleRepairer = require('role.repairer');
 
 module.exports.loop = function () {
     var energy = Game.spawns['Spawn1'].room.energyAvailable;
-    console.log(energy * 2 + ' energy left');
+    console.log(energy + ' energy left');
     //energy = 200;
     //number of creeps in different jobs
     var minNumOfHarvesters = 6;
-    var minNumOfUpgraders = 2;
+    var minNumOfUpgraders = 3;
     var minNumOfRepairers = 1;
     var minNumOfBuilders = 4;
     var numOfHarvesters = _.sum(Game.creeps, (creep) => creep.memory.role == 'harvester');
