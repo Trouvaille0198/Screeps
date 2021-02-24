@@ -5,11 +5,13 @@ var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
 var roleRepairer = require('role.repairer');
 var roleCarrier = require('role.carrier');
+var roleLongDistanceHarvester = require('role.longDistanceHarvester');
 
 
 module.exports.loop = function () {
+    console.log(Game.rooms['E37S38'].name);
     var wholeEnergy = Game.spawns['Spawn1'].room.energyAvailable;
-    var energy = wholeEnergy < 800 ? wholeEnergy : 800;
+    var energy = wholeEnergy < 1000 ? wholeEnergy : 1000;
     console.log(wholeEnergy + ' energy left');
     //energy = 200;
     //number of creeps in different jobs
@@ -18,11 +20,14 @@ module.exports.loop = function () {
     var minNumOfUpgraders = 2;
     var minNumOfRepairers = 2;
     var minNumOfBuilders = 4;
+    var minNumOfLongDistanceHarvesters = 1;
     var numOfHarvesters = _.sum(Game.creeps, (creep) => creep.memory.role == 'harvester');
     var numOfCarriers = _.sum(Game.creeps, (creep) => creep.memory.role == 'carrier');
     var numOfUpgraders = _.sum(Game.creeps, (creep) => creep.memory.role == 'upgrader');
     var numOfRepairers = _.sum(Game.creeps, (creep) => creep.memory.role == 'repairer');
     var numOfBuilders = _.sum(Game.creeps, (creep) => creep.memory.role == 'builder');
+    var numOfLongDistanceHarvesters = _.sum(Game.creeps,
+        (creep) => creep.memory.role == 'longDistanceHarvester');
 
     //Clear memories
     Game.spawns['Spawn1'].clearMemory();
@@ -45,6 +50,9 @@ module.exports.loop = function () {
         else if (creep.memory.role == 'repairer') {
             roleRepairer.run(creep);
         }
+        else if (creep.memory.role == 'longDistanceHarvester') {
+            roleLongDistanceHarvester.run(creep);
+        }
     }
 
     if (numOfHarvesters < minNumOfHarvesters) {
@@ -62,6 +70,9 @@ module.exports.loop = function () {
     else if (numOfBuilders < minNumOfBuilders) {
         Game.spawns['Spawn1'].spawnCustomCreep(energy, 'builder');
     }
+    else if (numOfLongDistanceHarvesters < minNumOfLongDistanceHarvesters) {
+        Game.spawns['Spawn1'].spawnLongDistanceHarvester('E37S37', 'E37S38');
+    }
 
     var towers = Game.rooms['E37S37'].find(FIND_STRUCTURES,
         {
@@ -74,5 +85,5 @@ module.exports.loop = function () {
     }
 
     console.log('Har: ' + numOfHarvesters, 'Car: ' + numOfCarriers, 'Upgr: ' + numOfUpgraders,
-        'Repair: ' + numOfRepairers, 'Build: ' + numOfBuilders);
+        'Repair: ' + numOfRepairers, 'Build: ' + numOfBuilders, 'LongDi' + numOfLongDistanceHarvesters);
 } 

@@ -36,3 +36,26 @@ StructureSpawn.prototype.clearMemory =
         }
     };
 
+Structure.prototype.spawnLongDistanceHarvester =
+    function (homeRoom, targetRoom) {
+        // 
+        var body = [];
+        for (let i = 0; i < 2; i++) {
+            body.push(WORK);
+        }
+        for (let i = 0; i < 2; i++) {
+            body.push(CARRY);
+        }
+        for (let i = 0; i < 4; i++) {
+            body.push(MOVE);
+        }
+        return this.spawnCreep(body, 'longDistanceHarvester' + Game.time, {
+            memory: {
+                role: 'longDistanceHarvester',
+                homeRoom: homeRoom,
+                targetRoom: targetRoom,
+                working: false
+            }
+        });
+    }
+
