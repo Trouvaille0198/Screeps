@@ -40,7 +40,8 @@ var roleHarvester = {
                 }
             }
             else {
-                roleUpgrader.run(creep);
+                //roleUpgrader.run(creep);
+                creep.say('cannot find!');
             }
         }
     }

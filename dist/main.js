@@ -1,4 +1,4 @@
-require('prototype.spawn')();
+require('prototype.spawn');
 var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
@@ -23,11 +23,7 @@ module.exports.loop = function () {
     var numOfBuilders = _.sum(Game.creeps, (creep) => creep.memory.role == 'builder');
 
     //Clear memories
-    for (let name in Memory.creeps) {
-        if (Game.creeps[name] == undefined) {
-            delete Memory.creeps[name];
-        }
-    }
+    Game.spawns['Spawn1'].clearMemory();
     // for every creep's loop
     for (let name in Game.creeps) {
         var creep = Game.creeps[name];
@@ -50,10 +46,6 @@ module.exports.loop = function () {
 
     if (numOfHarvesters < minNumOfHarvesters) {
         Game.spawns['Spawn1'].spawnCustomCreep(energy, 'harvester');
-        // Game.spawns['Spawn1'].spawnCreep([WORK, CARRY, MOVE, MOVE],
-        //     'harvester' + Game.time,
-        //     { memory: { role: 'harvester', working: false } });
-        //console.log('A harevster has been spawned.');
     }
     else if (numOfCarriers < minNumOfCarriers) {
         Game.spawns['Spawn1'].spawnCustomCreep(energy, 'carrier');
