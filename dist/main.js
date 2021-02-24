@@ -1,3 +1,4 @@
+require('prototype.tower');
 require('prototype.spawn');
 var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
@@ -8,12 +9,12 @@ var roleCarrier = require('role.carrier');
 
 module.exports.loop = function () {
     var wholeEnergy = Game.spawns['Spawn1'].room.energyAvailable;
-    var energy = wholeEnergy < 1000 ? wholeEnergy : 1000;
+    var energy = wholeEnergy < 800 ? wholeEnergy : 800;
     console.log(wholeEnergy + ' energy left');
-    //energy = 200;
+    energy = 200;
     //number of creeps in different jobs
-    var minNumOfHarvesters = 7;
-    var minNumOfCarriers = 2;
+    var minNumOfHarvesters = 4;
+    var minNumOfCarriers = 3;
     var minNumOfUpgraders = 2;
     var minNumOfRepairers = 4;
     var minNumOfBuilders = 4;
@@ -62,6 +63,15 @@ module.exports.loop = function () {
         Game.spawns['Spawn1'].spawnCustomCreep(energy, 'builder');
     }
 
+    var towers = Game.rooms['E37S37'].find(FIND_STRUCTURES,
+        {
+            filter: (t) => (t.structureType == STRUCTURE_TOWER)
+        });
+    for (var tower of towers) {
+        tower._attack();
+        tower._heal();
+        tower._repair();
+    }
 
     console.log('Har: ' + numOfHarvesters, 'Car: ' + numOfCarriers, 'Upgr: ' + numOfUpgraders,
         'Repair: ' + numOfRepairers, 'Build: ' + numOfBuilders);
