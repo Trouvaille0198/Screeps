@@ -9,15 +9,15 @@ var roleLongDistanceHarvester = require('role.longDistanceHarvester');
 
 
 module.exports.loop = function () {
-    console.log(Game.rooms['E37S38'].name);
+    //console.log(Game.rooms['E37S38'].name);
     var wholeEnergy = Game.spawns['Spawn1'].room.energyAvailable;
     var energy = wholeEnergy < 1000 ? wholeEnergy : 1000;
     console.log(wholeEnergy + ' energy left');
     //energy = 200;
     //number of creeps in different jobs
-    var minNumOfHarvesters = 6;
-    var minNumOfCarriers = 3;
-    var minNumOfUpgraders = 2;
+    var minNumOfHarvesters = 5;
+    var minNumOfCarriers = 2;
+    var minNumOfUpgraders = 3;
     var minNumOfRepairers = 2;
     var minNumOfBuilders = 4;
     var minNumOfLongDistanceHarvesters = 1;
@@ -85,5 +85,5 @@ module.exports.loop = function () {
     }
 
     console.log('Har: ' + numOfHarvesters, 'Car: ' + numOfCarriers, 'Upgr: ' + numOfUpgraders,
-        'Repair: ' + numOfRepairers, 'Build: ' + numOfBuilders, 'LongDi' + numOfLongDistanceHarvesters);
+        'Repair: ' + numOfRepairers, 'Build: ' + numOfBuilders, 'LongDi: ' + numOfLongDistanceHarvesters);
 } 
