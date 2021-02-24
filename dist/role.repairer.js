@@ -30,10 +30,17 @@ var roleRepairer = {
         else {
             //begin repairing
             var structure = creep.pos.findClosestByPath(FIND_STRUCTURES,
-                { filter: (s) => s.hits < s.hitsMax && s.structureType != STRUCTURE_WALL })
+                { filter: (s) => s.hits < s.hitsMax && s.structureType != STRUCTURE_WALL });
+            var wall = creep.pos.findClosestByPath(FIND_STRUCTURES,
+                { filter: (s) => s.structureType == STRUCTURE_WALL && s.hits < 2000 });
             if (structure != undefined) {
                 if (creep.repair(structure) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(structure);
+                }
+            }
+            else if (wall != undefined) {
+                if (creep.repair(wall) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(wall);
                 }
             }
             else {
