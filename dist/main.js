@@ -11,12 +11,12 @@ module.exports.loop = function () {
     var wholeEnergy = Game.spawns['Spawn1'].room.energyAvailable;
     var energy = wholeEnergy < 800 ? wholeEnergy : 800;
     console.log(wholeEnergy + ' energy left');
-    energy = 200;
+    //energy = 200;
     //number of creeps in different jobs
-    var minNumOfHarvesters = 4;
+    var minNumOfHarvesters = 6;
     var minNumOfCarriers = 3;
     var minNumOfUpgraders = 2;
-    var minNumOfRepairers = 4;
+    var minNumOfRepairers = 2;
     var minNumOfBuilders = 4;
     var numOfHarvesters = _.sum(Game.creeps, (creep) => creep.memory.role == 'harvester');
     var numOfCarriers = _.sum(Game.creeps, (creep) => creep.memory.role == 'carrier');

@@ -23,7 +23,7 @@ var roleHarvester = {
                 }
             }
             else {
-                creep.say('contain all empty');
+                creep.say('空');
             }
         }
         else {
