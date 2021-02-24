@@ -14,12 +14,13 @@ var roleRepairer = {
             var structure = creep.pos.findClosestByPath(FIND_MY_STRUCTURES,
                 {
                     filter: (s) => (s.structureType == STRUCTURE_CONTAINER
-                        && structure.store[RESOURCE_ENERGY] != 0)
+                        && s.store[RESOURCE_ENERGY] != 0)
                 });
-            if (structure != undefined)
-                if (creep.withdraw(structure) == ERR_NOT_IN_RANGE) {
+            if (structure != undefined) {
+                if (creep.withdraw(structure, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(structure);
                 }
+            }
         }
         else {
             //begin repairing

@@ -21,17 +21,18 @@ var roleHarvester = {
             //bring energy to the container
             var structure = creep.pos.findClosestByPath(FIND_MY_STRUCTURES,
                 {
-                    filter: (s) => (s.structureType == STRUCTURE_CONTAINER)
+                    filter: (s) => (s.structureType == STRUCTURE_CONTAINER
+                        && s.store[RESOURCE_ENERGY] < s.store.getCapacity(RESOURCE_ENERGY))
                 });
-            if (structure != undefined
-                && structure.store[RESOURCE_ENERGY] < structure.store.getCapacity(RESOURCE_ENERGY)) {
+            if (structure != undefined) {
                 if (creep.transfer(structure, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(structure);
                 }
             }
             else {
+                creep.say('container not found')
                 // if container is filled, go build
-                roleBuilder.run(creep);
+                //roleBuilder.run(creep);
             }
         }
     }

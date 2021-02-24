@@ -12,10 +12,10 @@ module.exports.loop = function () {
     //energy = 200;
     //number of creeps in different jobs
     var minNumOfHarvesters = 6;
-    var minNumOfCarriers = 4;
+    var minNumOfCarriers = 2;
     var minNumOfUpgraders = 3;
     var minNumOfRepairers = 1;
-    var minNumOfBuilders = 4;
+    var minNumOfBuilders = 2;
     var numOfHarvesters = _.sum(Game.creeps, (creep) => creep.memory.role == 'harvester');
     var numOfCarriers = _.sum(Game.creeps, (creep) => creep.memory.role == 'carrier');
     var numOfUpgraders = _.sum(Game.creeps, (creep) => creep.memory.role == 'upgrader');
