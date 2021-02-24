@@ -1,5 +1,6 @@
 var roleUpgrader = require("./role.upgrader");
 var roleBuilder = require("./role.builder");
+var roleCarrier = require('./role.carrier');
 
 var roleHarvester = {
     run: function (creep) {
@@ -19,7 +20,7 @@ var roleHarvester = {
         }
         else {
             //bring energy to the container
-            var structure = creep.pos.findClosestByPath(FIND_MY_STRUCTURES,
+            var structure = creep.pos.findClosestByPath(FIND_STRUCTURES,
                 {
                     filter: (s) => (s.structureType == STRUCTURE_CONTAINER
                         && s.store[RESOURCE_ENERGY] < s.store.getCapacity(RESOURCE_ENERGY))
@@ -30,9 +31,8 @@ var roleHarvester = {
                 }
             }
             else {
-                creep.say('container not found')
-                // if container is filled, go build
-                //roleBuilder.run(creep);
+                // if container is filled, go carry
+                roleCarrier.run(creep);
             }
         }
     }

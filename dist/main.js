@@ -9,10 +9,10 @@ var roleCarrier = require('role.carrier');
 module.exports.loop = function () {
     var energy = Game.spawns['Spawn1'].room.energyAvailable;
     console.log(energy + ' energy left');
-    //energy = 200;
+    // energy = 200;
     //number of creeps in different jobs
-    var minNumOfHarvesters = 6;
-    var minNumOfCarriers = 2;
+    var minNumOfHarvesters = 7;
+    var minNumOfCarriers = 3;
     var minNumOfUpgraders = 3;
     var minNumOfRepairers = 1;
     var minNumOfBuilders = 2;

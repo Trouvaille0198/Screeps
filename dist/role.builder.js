@@ -1,4 +1,6 @@
-var roleUpgrader = require('role.upgrader');
+// var roleUpgrader = require('role.upgrader');
+// var roleCarrier = require('./role.carrier');
+var roleRepairer = require('./role.repairer');
 
 var roleBuilder = {
     run: function (creep) {
@@ -12,16 +14,20 @@ var roleBuilder = {
         }
 
         if (creep.memory.working == false) {
-            //get energy from the container
+            //get energy from the energy-stored-structure
             var structure = creep.pos.findClosestByPath(FIND_MY_STRUCTURES,
                 {
-                    filter: (s) => (s.structureType == STRUCTURE_CONTAINER
-                        && s.store[RESOURCE_ENERGY] != 0)
+                    filter: (s) => ((s.structureType == STRUCTURE_SPAWN
+                        || s.structureType == STRUCTURE_EXTENSION || s.structureType == STRUCTURE_TOWER)
+                        && s.store[RESOURCE_ENERGY] > 0)
                 });
             if (structure != undefined) {
                 if (creep.withdraw(structure, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(structure);
                 }
+            }
+            else {
+                creep.say('energy empty!');
             }
         }
         else {
@@ -35,7 +41,7 @@ var roleBuilder = {
             }
             else {
                 // if no constructions needed to be built, go upgrading the controller
-                roleUpgrader.run(creep);
+                roleRepairer.run(creep);
             }
         }
     }
