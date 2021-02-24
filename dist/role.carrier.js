@@ -11,27 +11,29 @@ var roleHarvester = {
         }
 
         if (creep.memory.working == false) {
-            //harvest energy from the source
-            var source = creep.pos.findClosestByPath(FIND_SOURCES);
-            if (creep.harvest(source) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(source);
-            }
-        }
-        else {
-            //bring energy to the container
+            //get energy from the container 
             var structure = creep.pos.findClosestByPath(FIND_MY_STRUCTURES,
                 {
-                    filter: (s) => (s.structureType == STRUCTURE_CONTAINER)
+                    filter: (s) => (s.structureType == STRUCTURE_CONTAINER
+                        && structure.store[RESOURCE_ENERGY] != 0)
+                });
+            if (structure != undefined)
+                if (creep.withdraw(structure) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(structure);
+                }
+        }
+        else {
+            //carry energy to the spawn, extention and tower
+            var structure = creep.pos.findClosestByPath(FIND_MY_STRUCTURES,
+                {
+                    filter: (s) => (s.structureType == STRUCTURE_SPAWN
+                        || s.structureType == STRUCTURE_EXTENSION || s.structureType == STRUCTURE_TOWER)
                 });
             if (structure != undefined
                 && structure.store[RESOURCE_ENERGY] < structure.store.getCapacity(RESOURCE_ENERGY)) {
                 if (creep.transfer(structure, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(structure);
                 }
-            }
-            else {
-                // if container is filled, go build
-                roleBuilder.run(creep);
             }
         }
     }

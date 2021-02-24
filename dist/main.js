@@ -3,6 +3,7 @@ var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
 var roleRepairer = require('role.repairer');
+var roleCarrier = require('role.carrier');
 
 
 module.exports.loop = function () {
@@ -11,10 +12,12 @@ module.exports.loop = function () {
     //energy = 200;
     //number of creeps in different jobs
     var minNumOfHarvesters = 6;
+    var minNumOfCarriers = 4;
     var minNumOfUpgraders = 3;
     var minNumOfRepairers = 1;
     var minNumOfBuilders = 4;
     var numOfHarvesters = _.sum(Game.creeps, (creep) => creep.memory.role == 'harvester');
+    var numOfCarriers = _.sum(Game.creeps, (creep) => creep.memory.role == 'carrier');
     var numOfUpgraders = _.sum(Game.creeps, (creep) => creep.memory.role == 'upgrader');
     var numOfRepairers = _.sum(Game.creeps, (creep) => creep.memory.role == 'repairer');
     var numOfBuilders = _.sum(Game.creeps, (creep) => creep.memory.role == 'builder');
@@ -30,6 +33,9 @@ module.exports.loop = function () {
         var creep = Game.creeps[name];
         if (creep.memory.role == 'harvester') {
             roleHarvester.run(creep);
+        }
+        else if (creep.memory.role == 'carrier') {
+            roleCarrier.run(creep);
         }
         else if (creep.memory.role == 'upgrader') {
             roleUpgrader.run(creep);
@@ -49,6 +55,9 @@ module.exports.loop = function () {
         //     { memory: { role: 'harvester', working: false } });
         //console.log('A harevster has been spawned.');
     }
+    else if (numOfCarriers < minNumOfCarriers) {
+        Game.spawns['Spawn1'].spawnCustomCreep(energy, 'carrier');
+    }
     else if (numOfUpgraders < minNumOfUpgraders) {
         Game.spawns['Spawn1'].spawnCustomCreep(energy, 'upgrader');
     }
@@ -60,6 +69,6 @@ module.exports.loop = function () {
     }
 
 
-    console.log('Har: ' + numOfHarvesters, 'Upgr: ' + numOfUpgraders,
+    console.log('Har: ' + numOfHarvesters, 'Car: ' + numOfCarriers, 'Upgr: ' + numOfUpgraders,
         'Repair: ' + numOfRepairers, 'Build: ' + numOfBuilders);
 } 

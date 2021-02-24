@@ -10,14 +10,19 @@ var roleBuilder = {
             // if creep is harvesting energy but is full
             creep.memory.working = true;// switch state
         }
-        
+
         if (creep.memory.working == false) {
-            //gathering energy from the source
-            var source = creep.pos.findClosestByPath(FIND_SOURCES);
-            if (creep.harvest(source) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(source);
-            }
-            
+            //get energy from the container
+            var structure = creep.pos.findClosestByPath(FIND_MY_STRUCTURES,
+                {
+                    filter: (s) => (s.structureType == STRUCTURE_CONTAINER
+                        && structure.store[RESOURCE_ENERGY] != 0)
+                });
+            if (structure != undefined)
+                if (creep.withdraw(structure) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(structure);
+                }
+
         }
         else {
             // complete a constructionSite
