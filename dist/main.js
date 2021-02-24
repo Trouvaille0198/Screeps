@@ -7,15 +7,16 @@ var roleCarrier = require('role.carrier');
 
 
 module.exports.loop = function () {
-    var energy = Game.spawns['Spawn1'].room.energyAvailable;
-    console.log(energy + ' energy left');
-    // energy = 200;
+    var wholeEnergy = Game.spawns['Spawn1'].room.energyAvailable;
+    var energy = wholeEnergy < 1000 ? wholeEnergy : 1000;
+    console.log(wholeEnergy + ' energy left');
+    //energy = 200;
     //number of creeps in different jobs
     var minNumOfHarvesters = 7;
-    var minNumOfCarriers = 3;
-    var minNumOfUpgraders = 3;
-    var minNumOfRepairers = 1;
-    var minNumOfBuilders = 2;
+    var minNumOfCarriers = 2;
+    var minNumOfUpgraders = 2;
+    var minNumOfRepairers = 4;
+    var minNumOfBuilders = 4;
     var numOfHarvesters = _.sum(Game.creeps, (creep) => creep.memory.role == 'harvester');
     var numOfCarriers = _.sum(Game.creeps, (creep) => creep.memory.role == 'carrier');
     var numOfUpgraders = _.sum(Game.creeps, (creep) => creep.memory.role == 'upgrader');
@@ -25,6 +26,7 @@ module.exports.loop = function () {
     //Clear memories
     Game.spawns['Spawn1'].clearMemory();
     // for every creep's loop
+    //var creepJobs = ['harvester', 'carrier', 'upgrader', 'builder', 'repairer']
     for (let name in Game.creeps) {
         var creep = Game.creeps[name];
         if (creep.memory.role == 'harvester') {
