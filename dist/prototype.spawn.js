@@ -40,13 +40,13 @@ Structure.prototype.spawnLongDistanceHarvester =
     function (homeRoom, targetRoom) {
         // 
         var body = [];
-        for (let i = 0; i < 2; i++) {
+        for (let i = 0; i < 1; i++) {
             body.push(WORK);
         }
-        for (let i = 0; i < 2; i++) {
+        for (let i = 0; i < 1; i++) {
             body.push(CARRY);
         }
-        for (let i = 0; i < 4; i++) {
+        for (let i = 0; i < 2; i++) {
             body.push(MOVE);
         }
         return this.spawnCreep(body, 'longDistanceHarvester' + Game.time, {
