@@ -1,5 +1,5 @@
-const { drop } = require("lodash");
-var roleUpgrader = require("./role.upgrader");
+//const { drop } = require("lodash");
+//var roleUpgrader = require("./role.upgrader");
 // var roleBuilder = require("./role.builder");
 
 var roleHarvester = {
@@ -12,19 +12,20 @@ var roleHarvester = {
         }
 
         if (creep.memory.working == false) {
-            var ruin = creep.pos.findClosestByPath(FIND_RUINS);
+            // var ruin = creep.pos.findClosestByPath(FIND_RUINS);
             var dropEnergy = creep.pos.findClosestByPath(FIND_DROPPED_RESOURCES,
                 {
                     filter: (s) => s.resourceType == RESOURCE_ENERGY
                 });
-            if (ruin != undefined) {
+            // if (ruin == undefined) {
+            //     //pick up drop energy
+            //     if (creep.withdraw(ruin, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+            //         creep.moveTo(ruin);
+            //     }
+            // }
+            if (dropEnergy != undefined) {
                 //pick up drop energy
-                if (creep.withdraw(ruin, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(ruin);
-                }
-            }
-            else if (dropEnergy != undefined) {
-                //pick up drop energy
+                creep.say('捡东西咯')
                 if (creep.pickup(dropEnergy) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(dropEnergy);
                 }
