@@ -13,8 +13,8 @@ var roleUpgrader = {
             //get energy from the energy-stored-structure
             var structure = creep.pos.findClosestByPath(FIND_MY_STRUCTURES,
                 {
-                    filter: (s) => ((s.structureType == STRUCTURE_EXTENSION
-                        || s.structureType == STRUCTURE_STORAGE)
+                    filter: (s) => ((s.structureType == STRUCTURE_STORAGE
+                        || s.structureType == STRUCTURE_EXTENSION)
                         && s.store[RESOURCE_ENERGY] > 0)
                 });
             if (structure != undefined) {
