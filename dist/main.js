@@ -6,6 +6,8 @@ var roleBuilder = require('role.builder');
 var roleRepairer = require('role.repairer');
 var roleCarrier = require('role.carrier');
 var roleLongDistanceHarvester = require('role.longDistanceHarvester');
+var roleLongDistanceBuilder = require('role.longDistanceBuilder');
+var roleClaimer = require('role.claimer');
 
 
 module.exports.loop = function () {
@@ -15,12 +17,13 @@ module.exports.loop = function () {
     console.log(wholeEnergy + ' energy left');
     //energy = 200;
     //number of creeps in different jobs
-    var minNumOfHarvesters = 5;
-    var minNumOfCarriers = 3;
+    var minNumOfHarvesters = 4;
+    var minNumOfCarriers = 2;
     var minNumOfUpgraders = 2;
     var minNumOfRepairers = 1;
     var minNumOfBuilders = 2;
     var minNumOfLongDistanceHarvesters = 4;
+    //var minNumOfLongDistanceBuilders = 4;
     var numOfHarvesters = _.sum(Game.creeps, (creep) => creep.memory.role == 'harvester');
     var numOfCarriers = _.sum(Game.creeps, (creep) => creep.memory.role == 'carrier');
     var numOfUpgraders = _.sum(Game.creeps, (creep) => creep.memory.role == 'upgrader');
@@ -28,11 +31,13 @@ module.exports.loop = function () {
     var numOfBuilders = _.sum(Game.creeps, (creep) => creep.memory.role == 'builder');
     var numOfLongDistanceHarvesters = _.sum(Game.creeps,
         (creep) => creep.memory.role == 'longDistanceHarvester');
+    // var numOfLongDistanceBuilders = _.sum(Game.creeps,
+    //     (creep) => creep.memory.role == 'longDistanceBuilder');
+
 
     //Clear memories
     Game.spawns['Spawn1'].clearMemory();
     // for every creep's loop
-    //var creepJobs = ['harvester', 'carrier', 'upgrader', 'builder', 'repairer']
     for (let name in Game.creeps) {
         var creep = Game.creeps[name];
         if (creep.memory.role == 'harvester') {
@@ -53,6 +58,22 @@ module.exports.loop = function () {
         else if (creep.memory.role == 'longDistanceHarvester') {
             roleLongDistanceHarvester.run(creep);
         }
+        else if (creep.memory.role == 'longDistanceBuilder') {
+            roleLongDistanceBuilder.run(creep);
+        }
+        // else if (creep.memory.role == 'claimer') {
+        //     roleClaimer.run(creep);
+        // }
+
+        // else if (Game.spawns['Spawn1'].memory.claimRoom != undefined) {
+        //     if (Game.spawns['Spawn1'].spawnClaimer(Game.spawns['Spawn1'].memory.claimRoom) == OK) {
+        //         delete Game.spawns['Spawn1'].memory.claimRoom;
+        //         console.log("delete claimRoom memory successfully!");
+        //     }
+        //     else {
+        //         console.log('spawn claimer failed!');
+        //     }
+        // }
     }
 
     if (numOfHarvesters < minNumOfHarvesters) {
@@ -73,7 +94,11 @@ module.exports.loop = function () {
     else if (numOfLongDistanceHarvesters < minNumOfLongDistanceHarvesters) {
         Game.spawns['Spawn1'].spawnLongDistanceHarvester('E37S37', 'E37S38');
     }
+    // else if (numOfLongDistanceBuilders < minNumOfLongDistanceBuilders) {
+    //     Game.spawns['Spawn1'].spawnLongDistanceBuilder('E37S37', 'E37S38');
+    // }
 
+    //towers' actions
     var towers = Game.rooms['E37S37'].find(FIND_STRUCTURES,
         {
             filter: (t) => (t.structureType == STRUCTURE_TOWER)
@@ -85,5 +110,6 @@ module.exports.loop = function () {
     }
 
     console.log('Har: ' + numOfHarvesters, 'Car: ' + numOfCarriers, 'Upgr: ' + numOfUpgraders,
-        'Repair: ' + numOfRepairers, 'Build: ' + numOfBuilders, 'LongDi: ' + numOfLongDistanceHarvesters);
+        'Repair: ' + numOfRepairers, 'Build: ' + numOfBuilders,
+        'LongDi: ' + numOfLongDistanceHarvesters);
 } 

@@ -18,7 +18,7 @@ var roleLongDistanceHarvester = {
             }
             else {
                 //var source = Game.rooms[creep.memory.targetRoom].find(FIND_SOURCES_ACTIVE); //didn't work
-                var source = creep.pos.findClosestByPath(FIND_SOURCES);
+                var source = creep.pos.findClosestByPath(FIND_SOURCES_ACTIVE);
                 //creep.moveTo(10, 20);
                 if (creep.harvest(source) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(source);
@@ -47,7 +47,6 @@ var roleLongDistanceHarvester = {
                 }
             }
         }
-
     }
 }
 
