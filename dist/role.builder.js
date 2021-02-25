@@ -17,8 +17,8 @@ var roleBuilder = {
             //get energy from the energy-stored-structure
             var structure = creep.pos.findClosestByPath(FIND_MY_STRUCTURES,
                 {
-                    filter: (s) => ((s.structureType == STRUCTURE_SPAWN
-                        || s.structureType == STRUCTURE_EXTENSION || s.structureType == STRUCTURE_TOWER)
+                    filter: (s) => ((s.structureType == STRUCTURE_STORAGE
+                        || s.structureType == STRUCTURE_EXTENSION)
                         && s.store[RESOURCE_ENERGY] > 0)
                 });
             if (structure != undefined) {
@@ -27,7 +27,7 @@ var roleBuilder = {
                 }
             }
             else {
-                creep.say('energy empty!');
+                creep.say('能源空！');
             }
         }
         else {

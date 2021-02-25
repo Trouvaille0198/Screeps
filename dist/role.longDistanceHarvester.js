@@ -26,7 +26,7 @@ var roleLongDistanceHarvester = {
             }
         }
         else {
-            creep.say('111');
+            creep.say('搬回来咯');
             if (creep.room.name != creep.memory.homeRoom) {
                 //if not in the target room
                 var exit = creep.room.findExitTo(creep.memory.homeRoom);
@@ -36,7 +36,8 @@ var roleLongDistanceHarvester = {
                 //go back
                 structure = creep.pos.findClosestByPath(FIND_STRUCTURES,
                     {
-                        filter: (s) => (s.structureType == STRUCTURE_CONTAINER
+                        filter: (s) => ((s.structureType == STRUCTURE_EXTENSION
+                            || s.structureType == STRUCTURE_STORAGE)
                             && s.store[RESOURCE_ENERGY] < s.store.getCapacity(RESOURCE_ENERGY))
                     });
                 if (structure != undefined) {

@@ -14,8 +14,8 @@ var roleRepairer = {
             //get energy from the energy-stored-structure
             var structure = creep.pos.findClosestByPath(FIND_MY_STRUCTURES,
                 {
-                    filter: (s) => ((s.structureType == STRUCTURE_SPAWN
-                        || s.structureType == STRUCTURE_EXTENSION || s.structureType == STRUCTURE_TOWER)
+                    filter: (s) => ((s.structureType == STRUCTURE_EXTENSION
+                        || s.structureType == STRUCTURE_STORAGE)
                         && s.store[RESOURCE_ENERGY] > 0)
                 });
             if (structure != undefined) {
@@ -24,15 +24,21 @@ var roleRepairer = {
                 }
             }
             else {
-                creep.say('energy empty!');
+                creep.say('能源空!');
             }
         }
         else {
             //begin repairing
             var structure = creep.pos.findClosestByPath(FIND_STRUCTURES,
-                { filter: (s) => s.hits < s.hitsMax && s.structureType != STRUCTURE_WALL });
+                {
+                    filter: (s) => s.hits < s.hitsMax && s.structureType != STRUCTURE_WALL
+                        && s.structureType != STRUCTURE_RAMPART
+                });
             var wall = creep.pos.findClosestByPath(FIND_STRUCTURES,
-                { filter: (s) => s.structureType == STRUCTURE_WALL && s.hits < 2000 });
+                {
+                    filter: (s) => (s.structureType == STRUCTURE_WALL || s.structureType == STRUCTURE_RAMPART)
+                        && s.hits < 5000
+                });
             if (structure != undefined) {
                 if (creep.repair(structure) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(structure);

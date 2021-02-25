@@ -1,3 +1,5 @@
+const roleHarvester = require("./role.harvester");
+
 var roleUpgrader = {
     run: function (creep) {
         if (creep.store[RESOURCE_ENERGY] == 0) {
@@ -11,8 +13,8 @@ var roleUpgrader = {
             //get energy from the energy-stored-structure
             var structure = creep.pos.findClosestByPath(FIND_MY_STRUCTURES,
                 {
-                    filter: (s) => ((s.structureType == STRUCTURE_SPAWN
-                        || s.structureType == STRUCTURE_EXTENSION || s.structureType == STRUCTURE_TOWER)
+                    filter: (s) => ((s.structureType == STRUCTURE_EXTENSION
+                        || s.structureType == STRUCTURE_STORAGE)
                         && s.store[RESOURCE_ENERGY] > 0)
                 });
             if (structure != undefined) {
@@ -21,7 +23,9 @@ var roleUpgrader = {
                 }
             }
             else {
-                creep.say('energy empty!');
+                creep.say('能源空，我自己采');
+                roleHarvester.run(creep);
+
             }
         }
         else {

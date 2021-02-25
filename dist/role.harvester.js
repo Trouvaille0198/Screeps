@@ -1,6 +1,4 @@
-var roleUpgrader = require("./role.upgrader");
-var roleBuilder = require("./role.builder");
-var roleCarrier = require('./role.carrier');
+//var roleCarrier = require('./role.carrier');
 
 var roleHarvester = {
     run: function (creep) {
@@ -31,8 +29,7 @@ var roleHarvester = {
                 }
             }
             else {
-                // if container is filled, go carry
-                roleCarrier.run(creep);
+                //roleCarrier.run(creep);
             }
         }
     }
