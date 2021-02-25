@@ -57,7 +57,7 @@ var roleLongDistanceBuilder = {
                 else {
                     creep.say('干完噜');
                     // if no constructions needed to be built, go repairing
-                    roleRepairer.run(creep);
+                    //roleRepairer.run(creep);
                 }
             }
 
