@@ -1,19 +1,33 @@
-const mount = require('mount');
+var mount = require('mount');
+require('prototype.creep');
 require('prototype.tower');
 require('prototype.spawn');
-// var roleHarvester = require('role.harvester');
-// var roleUpgrader = require('role.upgrader');
-// var roleBuilder = require('role.builder');
-// var roleRepairer = require('role.repairer');
-// var roleCarrier = require('role.carrier');
-// var roleLongDistanceHarvester = require('role.longDistanceHarvester');
-// var roleClaimer = require('role.claimer');
+
+
+const rolesList1 = {
+    harvester: 3,
+    carrier: 3,
+    builder: 2,
+    repairer: 1,
+    upgrader: 2,
+    colonyBuilder: 0,
+    colonyUpgrader: 0
+};
+const rolesList2 = {
+    harvester: 2,
+    carrier: 2,
+    builder: 3,
+    repairer: 1,
+    upgrader: 2,
+    colonyBuilder: 0,
+    colonyUpgrader: 0
+};
 
 
 module.exports.loop = function () {
+    console.log('\n\n-------------------------------------------------------------------------------------------------------------------------');
     //mount
     mount();
-
     //clear memory
     for (let name in Memory.creeps) {
         // and checking if the creep is still alive
@@ -23,27 +37,37 @@ module.exports.loop = function () {
         }
     }
 
+
+    //spawns' actions
+    // for (let name in Game.spawns) {
+    //     // run spawn logic
+    //     Game.spawns[name]._spawnCreeps(rolesList1);
+    //     Game.spawns[name]._outputInfo(rolesList1);
+    // }
+
+    Game.spawns['Spawn1']._spawnCreeps(rolesList1);
+    Game.spawns['Spawn1']._outputInfo(rolesList1);
+
+    Game.spawns['Spawn2']._spawnCreeps(rolesList2);
+    Game.spawns['Spawn2']._outputInfo(rolesList2);
+
     //creeps' actions
     for (let name in Game.creeps) {
         Game.creeps[name]._runRole();
-        Game.creeps[name]._longDistanceRunRole();
-    }
-    //spawns' actions
-    for (let spawnName in Game.spawns) {
-        // run spawn logic
-        Game.spawns[spawnName]._spawnCreeps();
-        Game.spawns[spawnName]._countRoles();
+        Game.creeps[name]._longDistanceRunRole('E37S38');
     }
 
     //towers' actions
-    var towers = Game.rooms['E37S37'].find(FIND_STRUCTURES,
-        {
-            filter: (t) => (t.structureType == STRUCTURE_TOWER)
-        });
-    for (var tower of towers) {
-        tower._attack();
-        tower._heal();
-        tower._repair();
+    for (let roomName in Game.rooms) {
+        var towers = Game.rooms[roomName].find(FIND_STRUCTURES,
+            {
+                filter: (t) => (t.structureType == STRUCTURE_TOWER)
+            });
+        for (var tower of towers) {
+            tower._attack();
+            tower._heal();
+            tower._repair();
+        }
     }
-
+    console.log('-------------------------------------------------------------------------------------------------------------------------\n');
 } 

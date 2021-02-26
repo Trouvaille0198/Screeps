@@ -1,19 +1,19 @@
 
 var roleHarvester = {
     run: function (creep) {
-
-        creep._checkWorkingState();
-
         if (creep.memory.sourceId != undefined) {
+            creep.say('yeah');
             let source = Game.getObjectById(creep.memory.sourceId);
-            let container = source.pos.findInRange(FIND_MY_STRUCTURES, 1, {
+            let container = source.pos.findInRange(FIND_STRUCTURES, 1, {
                 filter: s => s.structureType == STRUCTURE_CONTAINER
             })[0];
 
             if (!creep.pos.isEqualTo(container.pos)) {
+                creep.say('move!!');
                 creep.moveTo(container);
             }
             else {
+                creep.say('harvest!!');
                 if (creep.memory.working == false) {
                     creep.harvest(source);
                 }
@@ -25,6 +25,7 @@ var roleHarvester = {
         }
 
         else {
+            creep._checkWorkingState();
             // play as a early harvester
             if (creep.memory.working == false) {
                 creep._harvestEnergy();

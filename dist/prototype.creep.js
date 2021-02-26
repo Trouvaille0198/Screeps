@@ -10,7 +10,7 @@ var roles = {
 
 Creep.prototype._runRole =
     function () {
-        if (creep.memory.longDistance == false) {
+        if (this.memory.longDistance != true) {
             roles[this.memory.role].run(this);
         }
     };
@@ -18,8 +18,8 @@ Creep.prototype._runRole =
 Creep.prototype._longDistanceRunRole =
     function (targetRoom) {
         if (targetRoom != undefined) {
-            if (creep.memory.longDistance == true) {
-                roles[this.memory.role].longDistanceRun(this, targetRoom);
+            if (this.memory.longDistance == true) {
+                //roles[this.memory.role].longDistanceRun(this, targetRoom);
             }
         }
     };
