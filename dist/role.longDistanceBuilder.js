@@ -2,12 +2,7 @@
 
 var roleLongDistanceBuilder = {
     run: function (creep) {
-        if (creep.store[RESOURCE_ENERGY] == 0) {
-            creep.memory.working = false;
-        }
-        else if (creep.store[RESOURCE_ENERGY] == creep.store.getCapacity(RESOURCE_ENERGY)) {
-            creep.memory.working = true;
-        }
+        creep._checkWorkingState();
 
         if (creep.memory.working == false) {
             creep.say('回来嫖能量');
