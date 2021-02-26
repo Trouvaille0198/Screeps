@@ -22,7 +22,7 @@ var roleClaimer = {
             // else {
             //     creep.say('没找着');
             // }
-            if (creep.reserveController(creep.room.controller) == ERR_NOT_IN_RANGE) {
+            if (creep.claimController(creep.room.controller) == ERR_NOT_IN_RANGE) {
                 // move towards the controller
                 creep.moveTo(creep.room.controller);
             }
