@@ -22,8 +22,7 @@ module.exports.loop = function () {
     var minNumOfUpgraders = 2;
     var minNumOfRepairers = 1;
     var minNumOfBuilders = 2;
-    var minNumOfLongDistanceHarvesters = 4;
-    //var minNumOfLongDistanceBuilders = 4;
+    var minNumOfLongDistanceHarvesters = 2;
     var numOfHarvesters = _.sum(Game.creeps, (creep) => creep.memory.role == 'harvester');
     var numOfCarriers = _.sum(Game.creeps, (creep) => creep.memory.role == 'carrier');
     var numOfUpgraders = _.sum(Game.creeps, (creep) => creep.memory.role == 'upgrader');
@@ -31,8 +30,6 @@ module.exports.loop = function () {
     var numOfBuilders = _.sum(Game.creeps, (creep) => creep.memory.role == 'builder');
     var numOfLongDistanceHarvesters = _.sum(Game.creeps,
         (creep) => creep.memory.role == 'longDistanceHarvester');
-    // var numOfLongDistanceBuilders = _.sum(Game.creeps,
-    //     (creep) => creep.memory.role == 'longDistanceBuilder');
 
 
     //Clear memories
@@ -61,19 +58,9 @@ module.exports.loop = function () {
         else if (creep.memory.role == 'longDistanceBuilder') {
             roleLongDistanceBuilder.run(creep);
         }
-        // else if (creep.memory.role == 'claimer') {
-        //     roleClaimer.run(creep);
-        // }
-
-        // else if (Game.spawns['Spawn1'].memory.claimRoom != undefined) {
-        //     if (Game.spawns['Spawn1'].spawnClaimer(Game.spawns['Spawn1'].memory.claimRoom) == OK) {
-        //         delete Game.spawns['Spawn1'].memory.claimRoom;
-        //         console.log("delete claimRoom memory successfully!");
-        //     }
-        //     else {
-        //         console.log('spawn claimer failed!');
-        //     }
-        // }
+        else if (creep.memory.role == 'claimer') {
+            roleClaimer.run(creep);
+        }
     }
 
     if (numOfHarvesters < minNumOfHarvesters) {
@@ -94,9 +81,7 @@ module.exports.loop = function () {
     else if (numOfLongDistanceHarvesters < minNumOfLongDistanceHarvesters) {
         Game.spawns['Spawn1'].spawnLongDistanceHarvester('E37S37', 'E37S38');
     }
-    // else if (numOfLongDistanceBuilders < minNumOfLongDistanceBuilders) {
-    //     Game.spawns['Spawn1'].spawnLongDistanceBuilder('E37S37', 'E37S38');
-    // }
+
 
     //towers' actions
     var towers = Game.rooms['E37S37'].find(FIND_STRUCTURES,
