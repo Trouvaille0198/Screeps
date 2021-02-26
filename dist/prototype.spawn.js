@@ -1,6 +1,6 @@
 
 StructureSpawn.prototype.spawnCustomCreep =
-    function (energy, roleName) {
+    function (energy, roleName, longDistance = false) {
         var body = [];
         if (roleName == 'carrier') {
             var numOfParts = Math.floor(energy / 100);
@@ -24,7 +24,8 @@ StructureSpawn.prototype.spawnCustomCreep =
             }
         }
 
-        return this.spawnCreep(body, roleName + Game.time, { memory: { role: roleName, working: false } });
+        return this.spawnCreep(body, roleName + Game.time,
+            { memory: { role: roleName, working: false, longDistance: longDistance } });
     };
 
 StructureSpawn.prototype.clearMemory =
