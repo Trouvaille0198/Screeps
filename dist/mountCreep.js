@@ -264,5 +264,21 @@ const creepExtension = {
         else {
             return false;
         }
+    },
+
+    _findEnergy() {
+        //find energy in all ways
+        if (!this._withdrawEnergyFromRuin()) {
+            if (!this._pickupEnergy()) {
+                if (!this._withdrawEnergyFromStorage()) {
+                    if (!this._withdrawEnergyFromExtension()) {
+                        if (!this._withdrawEnergyFromContainer()) {
+                            this._harvestEnergy();
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
     }
 }

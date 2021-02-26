@@ -6,12 +6,7 @@ var roleUpgrader = {
 
         if (creep.memory.working == false) {
             //get energy from the energy-stored-structure
-            if (!creep._withdrawEnergyFromStorage()) {
-                if (!creep._withdrawEnergyFromExtension()) {
-                    creep.say('自己挖');
-                    creep._harvestEnergy();
-                }
-            }
+            creep._findEnergy();
         }
         else {
             //bring energy to the controller and upgrade it

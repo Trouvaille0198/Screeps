@@ -1,5 +1,5 @@
 
-var roleHarvester = {
+var roleCarrier = {
     run: function (creep) {
         creep._checkWorkingState();
 
@@ -26,4 +26,4 @@ var roleHarvester = {
     }
 }
 
-module.exports = roleHarvester;
+module.exports = roleCarrier;
