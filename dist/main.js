@@ -6,7 +6,7 @@ require('prototype.spawn');
 
 const rolesList1 = {
     harvester: 3,
-    carrier: 3,
+    carrier: 2,
     builder: 2,
     repairer: 1,
     upgrader: 2,

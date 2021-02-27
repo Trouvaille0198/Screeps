@@ -3,14 +3,7 @@ StructureSpawn.prototype.spawnCustomCreep =
         var energy = maxEnergy < 1000 ? maxEnergy : 1000;
         var body = [];
         if (roleName == 'carrier') {
-            var energy = maxEnergy < 800 ? maxEnergy : 800;
-            var numOfParts = Math.floor(energy / 100);
-            for (let i = 0; i < numOfParts; i++) {
-                body.push(CARRY);
-            }
-            for (let i = 0; i < numOfParts; i++) {
-                body.push(MOVE);
-            }
+
         }
         else {
             var numOfParts = Math.floor(energy / 200);
@@ -71,6 +64,27 @@ StructureSpawn.prototype.spawnHarvester =
         });
     };
 
+
+StructureSpawn.prototype.spawnCarrier =
+    function (maxEnergy, sourceId) {
+        var energy = maxEnergy < 800 ? maxEnergy : 800;
+        var numOfParts = Math.floor(energy / 100);
+        for (let i = 0; i < numOfParts; i++) {
+            body.push(CARRY);
+        }
+        for (let i = 0; i < numOfParts; i++) {
+            body.push(MOVE);
+        }
+
+        return this.spawnCreep(body, 'carrier' + Game.time, {
+            memory: {
+                role: 'carrier',
+                working: false,
+                sourceId: sourceId
+            }
+        });
+    };
+
 StructureSpawn.prototype.spawnClaimer =
     function (targetRoom) {
         return this.spawnCreep([CLAIM, MOVE], 'claimer' + Game.time,
@@ -117,7 +131,7 @@ StructureSpawn.prototype._spawnCreeps =
             flag = 1;
             //if there exitsts container, spawn normal container
             for (let source of sources) {
-                if (!_.some(creeps, (c) => c.room = room
+                if (!_.some(creeps, (c) => c.room == room
                     && c.memory.role == 'harvester' && c.memory.sourceId == source.id)) {
                     // check whether or not the source has a harvester
                     let containers = source.pos.findInRange(FIND_STRUCTURES, 1, {
@@ -143,7 +157,22 @@ StructureSpawn.prototype._spawnCreeps =
         }
         //spawn carrier
         else if (ExistContainer.length > 0 && numOfcreeps['carrier'] < rolesList['carrier']) {
-            this.spawnCustomCreep(maxEnergy, 'carrier');
+            for (let source of sources) {
+                if (!_.some(creeps, (c) => c.room == room
+                    && c.memory.role == 'carrier' && c.memory.sourceId == source.id)) {
+                    // check whether or not the source has a carrier
+                    let containers = source.pos.findInRange(FIND_STRUCTURES, 1, {
+                        filter: (s) => s.structureType == STRUCTURE_CONTAINER
+                    });
+                    // check whether or not the source has a container
+                    if (containers.length > 0) {
+                        console.log('carrier!' + this.room);
+                        //console.log(source.id);
+                        this.spawnCarrier(maxEnergy, source.id);
+                        break;
+                    }
+                }
+            }
         }
         else if (numOfcreeps['builder'] < rolesList['builder']) {
             this.spawnCustomCreep(maxEnergy, 'builder');

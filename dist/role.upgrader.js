@@ -6,19 +6,29 @@ var roleUpgrader = {
 
         if (creep.memory.working == false) {
             //get energy from the energy-stored-structure
-            creep._findEnergy();
+            if (!creep._withdrawEnergyFromStorage()) {
+
+                creep._harvestEnergy();
+
+            }
         }
         else {
+            controller = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+                filter: (s) => (s.structureType == STRUCTURE_CONTROLLER)
+            })
             //bring energy to the controller and upgrade it
-            if (creep.upgradeController(creep.room.controller) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(creep.room.controller);
+            if (creep.upgradeController(controller) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(controller);
+            }
+            else {
+                //creep.say(creep.upgradeController(creep.room.controller));
             }
         }
     },
 
     longDistanceRun: function (creep, targetRoom) {
         if (!creep._goToAnotherRoom(targetRoom)) {
-            this.run(creep);
+            creep.run(creep);
         }
 
     }

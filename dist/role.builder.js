@@ -6,7 +6,13 @@ var roleBuilder = {
 
         if (creep.memory.working == false) {
             //get energy from the energy-stored-structure
-            creep._findEnergy();
+            if (!creep._withdrawEnergyFromStorage()) {
+                if (!creep._withdrawEnergyFromExtension()) {
+                    if (!creep._withdrawEnergyFromContainer()) {
+                        creep._harvestEnergy();
+                    }
+                }
+            }
         }
         else {
             // complete a constructionSite
