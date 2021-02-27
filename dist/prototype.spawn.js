@@ -1,7 +1,7 @@
 StructureSpawn.prototype.spawnCustomCreep =
     function (maxEnergy, roleName, longDistance = false) {
-        var energy = maxEnergy < 1000 ? maxEnergy : 1000;
-        var body = [];
+        let energy = maxEnergy < 1000 ? maxEnergy : 1000;
+        let body = [];
         if (roleName == 'carrier') {
 
         }
@@ -26,7 +26,7 @@ StructureSpawn.prototype.spawnCustomCreep =
 StructureSpawn.prototype.spawnLongDistanceHarvester =
     function (homeRoom, targetRoom) {
         if (targetRoom != undefiend) {
-            var body = [];
+            let body = [];
             for (let i = 0; i < 1; i++) {
                 body.push(WORK);
             }
@@ -49,7 +49,8 @@ StructureSpawn.prototype.spawnLongDistanceHarvester =
 
 StructureSpawn.prototype.spawnHarvester =
     function (maxEnergy, sourceId) {
-        if (maxEnergy <= 300) {
+        let body = [];
+        if (maxEnergy < 550) {
             body = [WORK, WORK, MOVE];
         }
         else {
@@ -67,8 +68,10 @@ StructureSpawn.prototype.spawnHarvester =
 
 StructureSpawn.prototype.spawnCarrier =
     function (maxEnergy, sourceId) {
+        let body = [];
         var energy = maxEnergy < 800 ? maxEnergy : 800;
         var numOfParts = Math.floor(energy / 100);
+
         for (let i = 0; i < numOfParts; i++) {
             body.push(CARRY);
         }
@@ -129,31 +132,29 @@ StructureSpawn.prototype._spawnCreeps =
         //spawn harvester
         if (ExistContainer.length > 0) {
             flag = 1;
+            if (numOfcreeps['harvester'] < ExistContainer.length) {
             //if there exitsts container, spawn normal container
-            for (let source of sources) {
-                if (!_.some(creeps, (c) => c.room == room
-                    && c.memory.role == 'harvester' && c.memory.sourceId == source.id)) {
-                    // check whether or not the source has a harvester
-                    let containers = source.pos.findInRange(FIND_STRUCTURES, 1, {
-                        filter: (s) => s.structureType == STRUCTURE_CONTAINER
-                    });
-                    //console.log(containers.length + '!');
-                    // check whether or not the source has a container
-                    if (containers.length > 0) {
-                        //console.log(source.id);
-                        this.spawnHarvester(maxEnergy, source.id);
-                        break;
+                for (let source of sources) {
+                    if (!_.some(creeps, (c) => c.room == room
+                        && c.memory.role == 'harvester' && c.memory.sourceId == source.id)) {
+                        // check whether or not the source has a harvester
+                        let containers = source.pos.findInRange(FIND_STRUCTURES, 1, {
+                            filter: (s) => s.structureType == STRUCTURE_CONTAINER
+                        });
+                        //console.log(containers.length + '!');
+                        // check whether or not the source has a container
+                        if (containers.length > 0) {
+                            this.spawnHarvester(maxEnergy, source.id);
+                            break;
+                        }
+                        }
                     }
-                }
             }
         }
 
 
-        if (numOfcreeps['harvester'] < rolesList['harvester'] && flag == 0) {
-            console.log('spawning');
-            if (this.spawnCustomCreep(maxEnergy, 'harvester') === 0) {
-                console.log('spawn a harvester!');
-            }
+        if (numOfcreeps['harvester'] < rolesList['harvester'] && flag == 0 ) {
+            this.spawnCustomCreep(maxEnergy, 'harvester');
         }
         //spawn carrier
         else if (ExistContainer.length > 0 && numOfcreeps['carrier'] < rolesList['carrier']) {
@@ -166,7 +167,7 @@ StructureSpawn.prototype._spawnCreeps =
                     });
                     // check whether or not the source has a container
                     if (containers.length > 0) {
-                        console.log('carrier!' + this.room);
+                        //console.log('carrier!' + this.room);
                         //console.log(source.id);
                         this.spawnCarrier(maxEnergy, source.id);
                         break;

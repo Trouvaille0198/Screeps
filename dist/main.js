@@ -15,7 +15,7 @@ const rolesList1 = {
 };
 const rolesList2 = {
     harvester: 2,
-    carrier: 2,
+    carrier: 1,
     builder: 3,
     repairer: 1,
     upgrader: 2,
@@ -54,7 +54,7 @@ module.exports.loop = function () {
     //creeps' actions
     for (let name in Game.creeps) {
         Game.creeps[name]._runRole();
-        Game.creeps[name]._longDistanceRunRole('E37S38');
+        //Game.creeps[name]._longDistanceRunRole('E37S38');
     }
 
     //towers' actions

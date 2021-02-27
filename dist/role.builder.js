@@ -10,7 +10,7 @@ var roleBuilder = {
                 if (!creep._withdrawEnergyFromExtension()) {
                     if (!creep._withdrawEnergyFromContainer()) {
                         creep._harvestEnergy();
-                    }
+                    } 
                 }
             }
         }
