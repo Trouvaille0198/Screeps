@@ -8,11 +8,13 @@ var roleCarrier = {
         })[0];
         if (creep.memory.working == false) {
             //find energy from everywhere
-            if (!creep._withdrawEnergyFromRuin()) {
-                if (container != undefined) {
-                    if (creep.withdraw(container, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                        creep.moveTo(container);
-                    }
+            if(!creep._pickupEnergy()){
+                if (!creep._withdrawEnergyFromRuin()) {
+                    if (container != undefined) {
+                        if (creep.withdraw(container, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                            creep.moveTo(container);
+                        }
+                    } 
                 }
                 else {
                     creep.say('配对错乱！');
