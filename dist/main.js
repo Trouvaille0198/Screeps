@@ -15,7 +15,7 @@ const rolesList1 = {
 };
 const rolesList2 = {
     harvester: 2,
-    carrier: 1,
+    carrier: 2,
     builder: 3,
     repairer: 1,
     upgrader: 2,
