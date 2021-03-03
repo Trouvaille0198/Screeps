@@ -10,7 +10,7 @@ const rolesList1 = {
     builder: 2,
     repairer: 1,
     upgrader: 2,
-    pickuper:0,
+    pickuper: 0,
     colonyBuilder: 0,
     colonyUpgrader: 0
 };
@@ -20,7 +20,7 @@ const rolesList2 = {
     builder: 3,
     repairer: 1,
     upgrader: 2,
-    pickuper:1,
+    pickuper: 1,
     colonyBuilder: 0,
     colonyUpgrader: 0
 };
@@ -56,7 +56,9 @@ module.exports.loop = function () {
     //creeps' actions
     for (let name in Game.creeps) {
         Game.creeps[name]._runRole();
-        //Game.creeps[name]._longDistanceRunRole('E37S38');
+        if (Game.creeps[name].memory.longDistance == true)  {
+            Game.creeps[name]._longDistanceRunRole('E37S38');
+        }
     }
 
     //towers' actions

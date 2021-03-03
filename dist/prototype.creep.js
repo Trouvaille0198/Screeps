@@ -19,8 +19,7 @@ Creep.prototype._runRole =
 Creep.prototype._longDistanceRunRole =
     function (targetRoom) {
         if (targetRoom != undefined) {
-            if (this.memory.longDistance == true) {
-                //roles[this.memory.role].longDistanceRun(this, targetRoom);
-            }
+            roles[this.memory.role].longDistanceRun(this, targetRoom);
         }
     };
+    
