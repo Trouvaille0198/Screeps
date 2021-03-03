@@ -65,7 +65,7 @@ const creepExtension = {
         }
         else {
             return false;
-        }
+        } 
     },
 
     _withdrawEnergyFromRuin() {

@@ -5,7 +5,8 @@ var roles = {
     repairer: require('role.repairer'),
     carrier: require('role.carrier'),
     longDistanceHarvester: require('role.longDistanceHarvester'),
-    claimer: require('role.claimer')
+    claimer: require('role.claimer'),
+    pickuper:require('role.pickuper')
 };
 
 Creep.prototype._runRole =

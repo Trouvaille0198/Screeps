@@ -131,9 +131,9 @@ StructureSpawn.prototype._spawnCreeps =
 
         //spawn harvester
         if (ExistContainer.length > 0) {
-            flag = 1;
+            flag = 1;//skip step 'spawning early harvester'
             if (numOfcreeps['harvester'] < ExistContainer.length) {
-            //if there exitsts container, spawn normal container
+            //if there exitsts container, spawn normal harvester
                 for (let source of sources) {
                     if (!_.some(creeps, (c) => c.room == room
                         && c.memory.role == 'harvester' && c.memory.sourceId == source.id)) {
@@ -141,7 +141,6 @@ StructureSpawn.prototype._spawnCreeps =
                         let containers = source.pos.findInRange(FIND_STRUCTURES, 1, {
                             filter: (s) => s.structureType == STRUCTURE_CONTAINER
                         });
-                        //console.log(containers.length + '!');
                         // check whether or not the source has a container
                         if (containers.length > 0) {
                             this.spawnHarvester(maxEnergy, source.id);
@@ -152,7 +151,7 @@ StructureSpawn.prototype._spawnCreeps =
             }
         }
 
-
+        //spawn early harvester
         if (numOfcreeps['harvester'] < rolesList['harvester'] && flag == 0 ) {
             this.spawnCustomCreep(maxEnergy, 'harvester');
         }
@@ -183,6 +182,9 @@ StructureSpawn.prototype._spawnCreeps =
         }
         else if (numOfcreeps['upgrader'] < rolesList['upgrader']) {
             this.spawnCustomCreep(maxEnergy, 'upgrader');
+        }
+        else if (numOfcreeps['pickuper'] < rolesList['pickuper']) {
+            this.spawnCustomCreep(maxEnergy, 'pickuper');
         }
         else if (numOfcreeps['colonyBuilder'] < rolesList['colonyBuilder']) {
             this.spawnCustomCreep(400, 'builder', true);
