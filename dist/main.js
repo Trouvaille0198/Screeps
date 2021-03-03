@@ -20,7 +20,7 @@ const rolesList2 = {
     builder: 3,
     repairer: 1,
     upgrader: 2,
-    pickuper:0,
+    pickuper:1,
     colonyBuilder: 0,
     colonyUpgrader: 0
 };
