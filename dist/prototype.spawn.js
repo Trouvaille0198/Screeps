@@ -55,7 +55,7 @@ StructureSpawn.prototype.spawnColonyHelper =
         }
 
         return this.spawnCreep(body,
-            'colonyHelper to ' + targetRoom + Game.time, {
+            'colonyHelper to ' + targetRoom + ' ' + Game.time, {
             memory: {
                 role: 'colonyHelper',
                 working: false,
@@ -120,7 +120,14 @@ StructureSpawn.prototype._spawnCreeps =
         let maxEnergy = room.energyAvailable;
         let numOfcreeps = {};
         for (let role in rolesList) {
-            numOfcreeps[role] = _.sum(creeps, (c) => c.memory.role == role);
+            if (role == 'colonyHelper') {
+                // count global number
+                numOfcreeps[role] = _.sum(Game.creeps, (c) => c.memory.role == role);
+            }
+            else {
+                // count room number
+                numOfcreeps[role] = _.sum(creeps, (c) => c.memory.role == role);
+            }
         }
         let sources = room.find(FIND_SOURCES);
         let ExistContainer = room.find(FIND_STRUCTURES, {

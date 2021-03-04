@@ -45,7 +45,7 @@ module.exports.loop = function () {
     //     Game.spawns[name]._outputInfo(rolesList1);
     // }
 
-    Game.spawns['Spawn1']._spawnCreeps(rolesList1, 'E37S38');
+    Game.spawns['Spawn1']._spawnCreeps(rolesList1, 'E37S39');
     Game.spawns['Spawn1']._outputInfo(rolesList1);
 
     Game.spawns['Spawn2']._spawnCreeps(rolesList2);
@@ -56,7 +56,7 @@ module.exports.loop = function () {
         Game.creeps[name]._runRole();
     }
 
-    //towers' actions
+    //towers' actions 
     for (let roomName in Game.rooms) {
         var towers = Game.rooms[roomName].find(FIND_STRUCTURES,
             {
