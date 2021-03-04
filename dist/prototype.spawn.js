@@ -1,51 +1,23 @@
 StructureSpawn.prototype.spawnCustomCreep =
-    function (maxEnergy, roleName, longDistance = false) {
+    function (maxEnergy, roleName) {
         let energy = maxEnergy < 1000 ? maxEnergy : 1000;
         let body = [];
-        if (roleName == 'carrier') {
 
+        var numOfParts = Math.floor(energy / 200);
+        for (let i = 0; i < numOfParts; i++) {
+            body.push(WORK);
         }
-        else {
-            var numOfParts = Math.floor(energy / 200);
-            for (let i = 0; i < numOfParts; i++) {
-                body.push(WORK);
-            }
-            for (let i = 0; i < numOfParts; i++) {
-                body.push(CARRY);
-            }
-            for (let i = 0; i < numOfParts; i++) {
-                body.push(MOVE);
-            }
+        for (let i = 0; i < numOfParts; i++) {
+            body.push(CARRY);
         }
+        for (let i = 0; i < numOfParts; i++) {
+            body.push(MOVE);
+        }
+
         return this.spawnCreep(body, roleName + Game.time,
-            { memory: { role: roleName, working: false, longDistance: longDistance } });
+            { memory: { role: roleName, working: false } });
     };
 
-
-
-StructureSpawn.prototype.spawnLongDistanceHarvester =
-    function (homeRoom, targetRoom) {
-        if (targetRoom != undefiend) {
-            let body = [];
-            for (let i = 0; i < 1; i++) {
-                body.push(WORK);
-            }
-            for (let i = 0; i < 1; i++) {
-                body.push(CARRY);
-            }
-            for (let i = 0; i < 2; i++) {
-                body.push(MOVE);
-            }
-            return this.spawnCreep(body, 'longDistanceHarvester' + Game.time, {
-                memory: {
-                    role: 'longDistanceHarvester',
-                    homeRoom: homeRoom,
-                    targetRoom: targetRoom,
-                    working: false
-                }
-            });
-        }
-    };
 
 StructureSpawn.prototype.spawnHarvester =
     function (maxEnergy, sourceId) {
@@ -65,6 +37,32 @@ StructureSpawn.prototype.spawnHarvester =
         });
     };
 
+
+StructureSpawn.prototype.spawnColonyHelper =
+    function (maxEnergy, targetRoom) {
+        let body = [];
+        var energy = maxEnergy < 800 ? maxEnergy : 800;
+        var numOfParts = Math.floor(energy / 200);
+
+        for (let i = 0; i < numOfParts; i++) {
+            body.push(WORK);
+        }
+        for (let i = 0; i < numOfParts; i++) {
+            body.push(CARRY);
+        }
+        for (let i = 0; i < numOfParts; i++) {
+            body.push(MOVE);
+        }
+
+        return this.spawnCreep(body,
+            'colonyHelper to ' + targetRoom + Game.time, {
+            memory: {
+                role: 'colonyHelper',
+                working: false,
+                targetRoom: targetRoom
+            }
+        });
+    };
 
 StructureSpawn.prototype.spawnCarrier =
     function (maxEnergy, sourceId) {
@@ -115,7 +113,7 @@ StructureSpawn.prototype._outputInfo =
     };
 
 StructureSpawn.prototype._spawnCreeps =
-    function (rolesList) {
+    function (rolesList, targetRoom) {
         var flag = 0;
         let room = this.room;
         let creeps = room.find(FIND_MY_CREEPS);
@@ -133,7 +131,7 @@ StructureSpawn.prototype._spawnCreeps =
         if (ExistContainer.length > 0) {
             flag = 1;//skip step 'spawning early harvester'
             if (numOfcreeps['harvester'] < ExistContainer.length) {
-            //if there exitsts container, spawn normal harvester
+                //if there exitsts container, spawn normal harvester
                 for (let source of sources) {
                     if (!_.some(creeps, (c) => c.room == room
                         && c.memory.role == 'harvester' && c.memory.sourceId == source.id)) {
@@ -146,13 +144,13 @@ StructureSpawn.prototype._spawnCreeps =
                             this.spawnHarvester(maxEnergy, source.id);
                             break;
                         }
-                        }
                     }
+                }
             }
         }
 
         //spawn early harvester
-        if (numOfcreeps['harvester'] < rolesList['harvester'] && flag == 0 ) {
+        if (numOfcreeps['harvester'] < rolesList['harvester'] && flag == 0) {
             this.spawnCustomCreep(maxEnergy, 'harvester');
         }
         //spawn carrier
@@ -186,12 +184,10 @@ StructureSpawn.prototype._spawnCreeps =
         else if (numOfcreeps['pickuper'] < rolesList['pickuper']) {
             this.spawnCustomCreep(maxEnergy, 'pickuper');
         }
-        else if (numOfcreeps['colonyBuilder'] < rolesList['colonyBuilder']) {
-            this.spawnCustomCreep(400, 'builder', true);
+        else if (numOfcreeps['colonyHelper'] < rolesList['colonyHelper']) {
+            this.spawnColonyHelper(maxEnergy, targetRoom);
         }
-        else if (numOfcreeps['colonyUpgrader'] < rolesList['colonyUpgrader']) {
-            this.spawnCustomCreep(400, 'upgrader', true);
-        }
+
     };
 
 

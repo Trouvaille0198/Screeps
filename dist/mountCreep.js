@@ -65,7 +65,7 @@ const creepExtension = {
         }
         else {
             return false;
-        } 
+        }
     },
 
     _withdrawEnergyFromRuin() {
@@ -279,6 +279,21 @@ const creepExtension = {
                     }
                 }
             }
+        }
+    },
+    _upgradeController() {
+        controller = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+            filter: (s) => (s.structureType == STRUCTURE_CONTROLLER)
+        })
+        if (controller != undefiend) {
+            //bring energy to the controller and upgrade it
+            if (creep.upgradeController(controller) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(controller);
+                return true;
+            }
+        }
+        else {
+            return false;
         }
     }
 }

@@ -6,20 +6,12 @@ var roles = {
     carrier: require('role.carrier'),
     longDistanceHarvester: require('role.longDistanceHarvester'),
     claimer: require('role.claimer'),
-    pickuper:require('role.pickuper')
+    pickuper: require('role.pickuper'),
+    colonyHelper: require('role.colonyHelper')
 };
 
 Creep.prototype._runRole =
     function () {
-        if (this.memory.longDistance != true) {
-            roles[this.memory.role].run(this);
-        }
+        roles[this.memory.role].run(this);
     };
 
-Creep.prototype._longDistanceRunRole =
-    function (targetRoom) {
-        if (targetRoom != undefined) {
-            roles[this.memory.role].longDistanceRun(this, targetRoom);
-        }
-    };
-    
