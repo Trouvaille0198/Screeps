@@ -11,7 +11,7 @@ const rolesList1 = {
     repairer: 1,
     upgrader: 2,
     pickuper: 0,
-    colonyHelper:0
+    colonyHelper: 1
 };
 const rolesList2 = {
     harvester: 2,
@@ -20,7 +20,7 @@ const rolesList2 = {
     repairer: 1,
     upgrader: 2,
     pickuper: 1,
-    colonyHelper:0
+    colonyHelper: 0
 };
 
 
@@ -45,7 +45,7 @@ module.exports.loop = function () {
     //     Game.spawns[name]._outputInfo(rolesList1);
     // }
 
-    Game.spawns['Spawn1']._spawnCreeps(rolesList1);
+    Game.spawns['Spawn1']._spawnCreeps(rolesList1, 'E37S38');
     Game.spawns['Spawn1']._outputInfo(rolesList1);
 
     Game.spawns['Spawn2']._spawnCreeps(rolesList2);

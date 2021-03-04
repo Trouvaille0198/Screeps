@@ -281,14 +281,15 @@ const creepExtension = {
             }
         }
     },
+
     _upgradeController() {
-        controller = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+        controller = this.pos.findClosestByPath(FIND_STRUCTURES, {
             filter: (s) => (s.structureType == STRUCTURE_CONTROLLER)
         })
-        if (controller != undefiend) {
+        if (controller != undefined) {
             //bring energy to the controller and upgrade it
-            if (creep.upgradeController(controller) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(controller);
+            if (this.upgradeController(controller) == ERR_NOT_IN_RANGE) {
+                this.moveTo(controller);
                 return true;
             }
         }

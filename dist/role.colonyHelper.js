@@ -7,11 +7,12 @@ var roleColonyHelper = {
     run: function (creep) {
         creep._checkWorkingState();
 
-        if (!creep._goToAnotherRoom()) {
+        if (!creep._goToAnotherRoom(creep.memory.targetRoom)) {
+
             if (creep.memory.working == false) {
                 //harvest
                 creep._harvestEnergy();
-            
+
             }
             else {
                 //fill in extensions

@@ -13,8 +13,8 @@ var roleUpgrader = {
             }
         }
         else {
-            if (!_upgradeController()) {
-                creep.say("无控制器！");
+            if (!creep._upgradeController()) {
+                //creep.say("无控制器！");
             }
         }
     },
