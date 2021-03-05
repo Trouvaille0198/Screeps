@@ -22,13 +22,13 @@ var roleCarrier = {
         else {
             //carry energy to spawn, extension, tower or storage
             if (!creep._transferEnergyToExtension()) {
-                
-                    if (!creep._transferEnergyToTower()) {
-                        if (!creep._transferEnergyToStorage()) {
-                            creep.say('全满噜！')
-                        }
+
+                if (!creep._transferEnergyToTower()) {
+                    if (!creep._transferEnergyToStorage()) {
+                        //creep.say('全满噜！')
                     }
-                
+                }
+
             }
         }
     }

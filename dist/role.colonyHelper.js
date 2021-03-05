@@ -16,7 +16,7 @@ var roleColonyHelper = {
             }
             else {
                 //fill in extensions
-                if (!creep._transferEnergyToSpawn()) {
+                if (!creep._transferEnergyToExtention()) {
                     //fill in spawn 
                     if (!creep._transferEnergyToSpawn()) {
                         // complete a constructionSite

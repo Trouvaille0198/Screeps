@@ -18,6 +18,26 @@ StructureSpawn.prototype.spawnCustomCreep =
             { memory: { role: roleName, working: false } });
     };
 
+StructureSpawn.prototype.spawnLongDistanceHarvester =
+    function (maxEnergy, roleName) {
+        let energy = maxEnergy < 600 ? maxEnergy : 600;
+        let body = [];
+
+        var numOfParts = Math.floor(energy / 200);
+        for (let i = 0; i < numOfParts; i++) {
+            body.push(WORK);
+        }
+        for (let i = 0; i < numOfParts; i++) {
+            body.push(CARRY);
+        }
+        for (let i = 0; i < numOfParts; i++) {
+            body.push(MOVE);
+        }
+
+        return this.spawnCreep(body, 'longDistanceHarvester' + Game.time,
+            { memory: { role: roleName, working: false } });
+    };
+
 
 StructureSpawn.prototype.spawnHarvester =
     function (maxEnergy, sourceId) {
