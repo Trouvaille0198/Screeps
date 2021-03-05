@@ -105,7 +105,9 @@ StructureSpawn.prototype._outputInfo =
 
         var message = room.name + '---';
         for (let role in rolesList) {
-            message += role + ': ' + numOfcreeps[role] + ', ';
+            if (role != 'colonyHelper') {
+                message += role + ': ' + numOfcreeps[role] + ', ';
+            }
         }
         console.log(message);
         console.log(room.energyAvailable + ' energy left');
@@ -192,7 +194,7 @@ StructureSpawn.prototype._spawnCreeps =
             this.spawnCustomCreep(maxEnergy, 'pickuper');
         }
         else if (numOfcreeps['colonyHelper'] < rolesList['colonyHelper']) {
-            this.spawnColonyHelper(maxEnergy, targetRoom);
+            this.spawnColonyHelper(400, targetRoom);
         }
 
     };
