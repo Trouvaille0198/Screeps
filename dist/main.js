@@ -11,7 +11,8 @@ const rolesList1 = {
     repairer: 1,
     upgrader: 2,
     pickuper: 0,
-    colonyHelper: 0
+    colonyHelper: 0,
+    longDistanceHarvester: 0
 };
 const rolesList2 = {
     harvester: 2,
@@ -19,8 +20,9 @@ const rolesList2 = {
     builder: 3,
     repairer: 1,
     upgrader: 2,
-    pickuper: 1,
-    colonyHelper: 1
+    pickuper: 0,
+    colonyHelper: 0,
+    longDistanceHarvester: 0
 };
 
 
