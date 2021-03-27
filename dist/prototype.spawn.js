@@ -41,7 +41,7 @@ StructureSpawn.prototype.spawnLongDistanceHarvester =
 
 StructureSpawn.prototype.spawnHarvester =
     function (maxEnergy, sourceId) {
-        let body = [];
+        let body = [WORK, WORK, MOVE];
         if (maxEnergy < 550) {
             body = [WORK, WORK, MOVE];
         }
@@ -158,7 +158,7 @@ StructureSpawn.prototype._spawnCreeps =
 
         //spawn harvester
         if (ExistContainer.length > 0) {
-            flag = 1;//skip step 'spawning early harvester'
+            flag = 1; //skip step 'spawning early harvester'
             if (numOfcreeps['harvester'] < ExistContainer.length) {
                 //if there exitsts container, spawn normal harvester
                 for (let source of sources) {
@@ -170,7 +170,8 @@ StructureSpawn.prototype._spawnCreeps =
                         });
                         // check whether or not the source has a container
                         if (containers.length > 0) {
-                            this.spawnHarvester(maxEnergy, source.id);
+                            let energy = maxEnergy > 300 ? maxEnergy : 300;
+                            this.spawnHarvester(energy, source.id);
                             break;
                         }
                     }
@@ -193,8 +194,6 @@ StructureSpawn.prototype._spawnCreeps =
                     });
                     // check whether or not the source has a container
                     if (containers.length > 0) {
-                        //console.log('carrier!' + this.room);
-                        //console.log(source.id);
                         this.spawnCarrier(maxEnergy, source.id);
                         break;
                     }
