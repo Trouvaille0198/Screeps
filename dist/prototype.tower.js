@@ -4,7 +4,10 @@ StructureTower.prototype._attack =
         var target = this.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
         if (target != undefined) {
             this.attack(target);
+            return true;
         }
+        else
+            return false;
     }
 StructureTower.prototype._heal =
     function () {
@@ -12,7 +15,10 @@ StructureTower.prototype._heal =
             { filter: (c) => c.hits < c.hitsMax });
         if (creep != undefined) {
             this.heal(creep);
+            return true;
         }
+        else
+            return false;
     }
 
 StructureTower.prototype._repair =
@@ -24,5 +30,8 @@ StructureTower.prototype._repair =
             });
         if (structure != undefined) {
             this.repair(structure);
+            return true;
         }
+        else
+            return false;
     }

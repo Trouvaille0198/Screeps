@@ -235,7 +235,7 @@ const creepExtension = {
         var wall = this.pos.findClosestByPath(FIND_STRUCTURES,
             {
                 filter: (s) => (s.structureType == STRUCTURE_WALL || s.structureType == STRUCTURE_RAMPART)
-                    && s.hits < 7000
+                    && s.hits < 20000
             });
         if (structure != undefined) {
             if (this.repair(structure) == ERR_NOT_IN_RANGE) {

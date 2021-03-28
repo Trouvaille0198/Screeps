@@ -65,9 +65,9 @@ module.exports.loop = function () {
                 filter: (t) => (t.structureType == STRUCTURE_TOWER)
             });
         for (var tower of towers) {
-            tower._attack();
-            tower._heal();
-            tower._repair();
+            if (!tower._attack())
+                if (!tower._heal())
+                    tower._repair();
         }
     }
     console.log('-------------------------------------------------------------------------------------------------------------------------\n');
